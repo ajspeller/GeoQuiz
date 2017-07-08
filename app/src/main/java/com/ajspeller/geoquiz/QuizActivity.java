@@ -32,7 +32,13 @@ public class QuizActivity extends AppCompatActivity {
 
         // wire up the question and get the first question
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        updateQuestion();
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
+            }
+        });
 
         // Wire up the true button and show toast when clicked
         mTrueButton = (Button) findViewById(R.id.true_button);
@@ -61,6 +67,9 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+
+        // display a question
+        updateQuestion();
     }
 
     private void updateQuestion() {
