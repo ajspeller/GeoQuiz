@@ -25,6 +25,8 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mPrevButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
+    private int mCorrectAnswers = 0;
+    private int mIncorrectAnswers = 0;
     private Question[] mQuestionBank = new Question[]{
             new Question(R.string.question_australia, true),
             new Question(R.string.question_oceans, true),
@@ -167,12 +169,15 @@ public class QuizActivity extends AppCompatActivity {
 
     private void checkAnswer(boolean userPressed) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+        float score;
 
         int messageResId;
         if (userPressed == answerIsTrue) {
             messageResId = R.string.correct_toast;
+            mCorrectAnswers++;
         } else {
             messageResId = R.string.incorrect_toast;
+            mIncorrectAnswers++;
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
@@ -180,5 +185,10 @@ public class QuizActivity extends AppCompatActivity {
         questionAnswered[mCurrentIndex] = true;
         mTrueButton.setEnabled(false);
         mFalseButton.setEnabled(false);
+
+        if (mCorrectAnswers + mIncorrectAnswers == mQuestionBank.length) {
+            score = (float) mCorrectAnswers / mQuestionBank.length;
+            Toast.makeText(this, String.valueOf(score * 100) + "%", Toast.LENGTH_LONG).show();
+        }
     }
 }
