@@ -21,8 +21,6 @@ public class QuizActivity extends AppCompatActivity {
     private static final String QA5 = "QA5";
     private Button mTrueButton;
     private Button mFalseButton;
-    private ImageButton mNextButton;
-    private ImageButton mPrevButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
     private int mCorrectAnswers = 0;
@@ -40,6 +38,9 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ImageButton mNextButton;
+        ImageButton mPrevButton;
 
         // if the activity has been rebuilt then restore the values
         if (savedInstanceState != null) {
