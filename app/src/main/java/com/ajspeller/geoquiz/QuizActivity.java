@@ -13,6 +13,12 @@ public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String QA0 = "QA0";
+    private static final String QA1 = "QA1";
+    private static final String QA2 = "QA2";
+    private static final String QA3 = "QA3";
+    private static final String QA4 = "QA4";
+    private static final String QA5 = "QA5";
     private Button mTrueButton;
     private Button mFalseButton;
     private ImageButton mNextButton;
@@ -27,6 +33,7 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_americas, true),
             new Question(R.string.question_asia, true),
     };
+    private boolean questionAnswered[] = {false, false, false, false, false, false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,12 @@ public class QuizActivity extends AppCompatActivity {
         // if the activity has been rebuilt then restore the values
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            questionAnswered[0] = savedInstanceState.getBoolean(QA0, false);
+            questionAnswered[1] = savedInstanceState.getBoolean(QA1, false);
+            questionAnswered[2] = savedInstanceState.getBoolean(QA2, false);
+            questionAnswered[3] = savedInstanceState.getBoolean(QA3, false);
+            questionAnswered[4] = savedInstanceState.getBoolean(QA4, false);
+            questionAnswered[5] = savedInstanceState.getBoolean(QA5, false);
         }
 
         Log.d(TAG, "onCreate(Bundle) called");
@@ -119,6 +132,12 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(QA0, questionAnswered[0]);
+        savedInstanceState.putBoolean(QA1, questionAnswered[1]);
+        savedInstanceState.putBoolean(QA2, questionAnswered[2]);
+        savedInstanceState.putBoolean(QA3, questionAnswered[3]);
+        savedInstanceState.putBoolean(QA4, questionAnswered[4]);
+        savedInstanceState.putBoolean(QA5, questionAnswered[5]);
     }
 
     @Override
@@ -136,6 +155,14 @@ public class QuizActivity extends AppCompatActivity {
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+
+        if (!questionAnswered[mCurrentIndex]) {
+            mTrueButton.setEnabled(true);
+            mFalseButton.setEnabled(true);
+        } else {
+            mTrueButton.setEnabled(false);
+            mFalseButton.setEnabled(false);
+        }
     }
 
     private void checkAnswer(boolean userPressed) {
@@ -149,5 +176,9 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+
+        questionAnswered[mCurrentIndex] = true;
+        mTrueButton.setEnabled(false);
+        mFalseButton.setEnabled(false);
     }
 }
