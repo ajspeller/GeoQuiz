@@ -2,6 +2,7 @@ package com.ajspeller.geoquiz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,6 +20,8 @@ public class CheatActivity extends AppCompatActivity {
 
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
+    private TextView mBuildRelease;
+    private TextView mBuildLevel;
 
     public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
         Intent intent = new Intent(packageContext, CheatActivity.class);
@@ -46,6 +49,13 @@ public class CheatActivity extends AppCompatActivity {
 
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
         ButtonAndTextViewReferences();
+
+        mBuildRelease = (TextView) findViewById(R.id.build_release);
+        mBuildRelease.setText("Build Release: " + Build.VERSION.RELEASE);
+
+        mBuildLevel = (TextView) findViewById(R.id.build_level);
+        mBuildLevel.setText("API Level " + Build.VERSION.SDK_INT);
+
 
     }
 
